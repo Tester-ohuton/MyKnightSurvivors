@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public Slider sliderHP;
+
+    [SerializeField] GameSceneDirector gameSceneDirector;
+
     // 移動とアニメーション
     Rigidbody2D rb2D;
     Animator animator;
-    private float moveSpeed = 2;
+    public float moveSpeed = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +25,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         MovePlayer();
+        MoveCamera();
+        MoveSliderHP();
     }
 
     // プレイヤーの移動に関する処理
@@ -64,5 +71,74 @@ public class PlayerController : MonoBehaviour
         
         // アニメーションを再生
         animator.SetTrigger(triggers);
+
+        // 移動範囲制御
+        // 始点
+        if(rb2D.position.x < gameSceneDirector.worldStart.x)
+        {
+            Vector2 pos = rb2D.position;
+            pos.x = gameSceneDirector.worldStart.x;
+            rb2D.position = pos;
+        }
+
+        if (rb2D.position.y < gameSceneDirector.worldStart.y)
+        {
+            Vector2 pos = rb2D.position;
+            pos.y = gameSceneDirector.worldStart.y;
+            rb2D.position = pos;
+        }
+
+        // 終点
+        if (gameSceneDirector.worldEnd.x < rb2D.position.x)
+        {
+            Vector2 pos = rb2D.position;
+            pos.x = gameSceneDirector.worldEnd.x;
+            rb2D.position = pos;
+        }
+
+        if (gameSceneDirector.worldEnd.y < rb2D.position.y)
+        {
+            Vector2 pos = rb2D.position;
+            pos.y = gameSceneDirector.worldEnd.y;
+            rb2D.position = pos;
+        }
+    }
+
+    // カメラ移動
+    private void MoveCamera()
+    {
+        Vector3 pos = transform.position;
+        pos.z = Camera.main.transform.position.z;
+
+        // 始点
+        if(pos.x < gameSceneDirector.tileMapStart.x)
+        {
+            pos.x = gameSceneDirector.tileMapStart.x;
+        }
+        if (pos.y < gameSceneDirector.tileMapStart.y)
+        {
+            pos.y = gameSceneDirector.tileMapStart.y;
+        }
+
+        // 終点
+        if (gameSceneDirector.tileMapEnd.x < pos.x)
+        {
+            pos.x = gameSceneDirector.tileMapEnd.x;
+        }
+        if (gameSceneDirector.tileMapEnd.y < pos.y)
+        {
+            pos.y = gameSceneDirector.tileMapEnd.y;
+        }
+
+        // カメラ座標更新
+        Camera.main.transform.position = pos;
+    }
+
+    // HPスライダー移動
+    private void MoveSliderHP()
+    {
+        Vector3 pos = RectTransformUtility.WorldToScreenPoint(Camera.main,transform.position);
+        pos.y -= 50;
+        sliderHP.transform.position = pos;
     }
 }
