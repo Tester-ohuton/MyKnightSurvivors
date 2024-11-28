@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef74a2c8d8fe3184caf41703d41eade7, type: 3}
+  m_Name: CharacterSettings
+  m_EditorClassIdentifier: 
+  datas:
+  - Title: "\u30B3\u30A6\u30E2\u30EA"
+    Id: 100
+    Lv: 0
+    Name: "\u30B3\u30A6\u30E2\u30EA"
+    Description: 
+    Attack: 5
+    Defense: 0
+    HP: 10
+    MaxHP: 10
+    XP: 0.1
+    MaxXP: 0.5
+    MoveSpeed: 0.5
+    PickUpRange: 0
+    AliveTime: 0
+    Prefab: {fileID: 0}
+    DefaultWeaponIds: 
+    UsableWeaponIds: 
+    UsableWeaponMax: 0
+    MoveType: 0
