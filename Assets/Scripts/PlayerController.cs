@@ -5,139 +5,136 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public Slider sliderHP;
-
-    [SerializeField] GameSceneDirector gameSceneDirector;
-
     // 移動とアニメーション
-    Rigidbody2D rb2D;
+    Rigidbody2D rigidbody2d;
     Animator animator;
-    public float moveSpeed = 2;
+    float moveSpeed = 10;
+
+    // 後でInitへ移動
+    [SerializeField] GameSceneDirector sceneDirector;
+    [SerializeField] Slider sliderHP;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb2D = GetComponent<Rigidbody2D>();
+        rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
-        MoveCamera();
-        MoveSliderHP();
+        movePlayer();
+
+        moveCamera();
+
+        moveSliderHP();
     }
 
     // プレイヤーの移動に関する処理
-    private void MovePlayer()
+    void movePlayer()
     {
+        // 移動する方向
         Vector2 dir = Vector2.zero;
-        string triggers = "";
+        // 再生するアニメーション
+        string trigger = "";
 
-        // 上移動
-        if(Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             dir += Vector2.up;
-            triggers = "isUp";
+            trigger = "isUp";
         }
 
-        // 下移動
         if (Input.GetKey(KeyCode.DownArrow))
         {
             dir -= Vector2.up;
-            triggers = "isDown";
+            trigger = "isDown";
         }
 
-        // 左移動
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            dir -= Vector2.right;
-            triggers = "isLeft";
-        }
-
-        // 右移動
         if (Input.GetKey(KeyCode.RightArrow))
         {
             dir += Vector2.right;
-            triggers = "isRight";
+            trigger = "isRight";
         }
 
-        // 入力がなければぬける
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            dir -= Vector2.right;
+            trigger = "isLeft";
+        }
+
+        // 入力がなければ抜ける
         if (Vector2.zero == dir) return;
 
         // プレイヤー移動
-        rb2D.position += dir.normalized * moveSpeed *Time.deltaTime;
-        
-        // アニメーションを再生
-        animator.SetTrigger(triggers);
+        rigidbody2d.position += dir.normalized * moveSpeed * Time.deltaTime;
+
+        // アニメーションを再生する
+        animator.SetTrigger(trigger);
 
         // 移動範囲制御
         // 始点
-        if(rb2D.position.x < gameSceneDirector.worldStart.x)
+        if (rigidbody2d.position.x < sceneDirector.WorldStart.x)
         {
-            Vector2 pos = rb2D.position;
-            pos.x = gameSceneDirector.worldStart.x;
-            rb2D.position = pos;
+            Vector2 pos = rigidbody2d.position;
+            pos.x = sceneDirector.WorldStart.x;
+            rigidbody2d.position = pos;
         }
-
-        if (rb2D.position.y < gameSceneDirector.worldStart.y)
+        if (rigidbody2d.position.y < sceneDirector.WorldStart.y)
         {
-            Vector2 pos = rb2D.position;
-            pos.y = gameSceneDirector.worldStart.y;
-            rb2D.position = pos;
+            Vector2 pos = rigidbody2d.position;
+            pos.y = sceneDirector.WorldStart.y;
+            rigidbody2d.position = pos;
         }
-
         // 終点
-        if (gameSceneDirector.worldEnd.x < rb2D.position.x)
+        if (sceneDirector.WorldEnd.x < rigidbody2d.position.x)
         {
-            Vector2 pos = rb2D.position;
-            pos.x = gameSceneDirector.worldEnd.x;
-            rb2D.position = pos;
+            Vector2 pos = rigidbody2d.position;
+            pos.x = sceneDirector.WorldEnd.x;
+            rigidbody2d.position = pos;
         }
-
-        if (gameSceneDirector.worldEnd.y < rb2D.position.y)
+        if (sceneDirector.WorldEnd.y < rigidbody2d.position.y)
         {
-            Vector2 pos = rb2D.position;
-            pos.y = gameSceneDirector.worldEnd.y;
-            rb2D.position = pos;
+            Vector2 pos = rigidbody2d.position;
+            pos.y = sceneDirector.WorldEnd.y;
+            rigidbody2d.position = pos;
         }
     }
 
     // カメラ移動
-    private void MoveCamera()
+    void moveCamera()
     {
         Vector3 pos = transform.position;
         pos.z = Camera.main.transform.position.z;
 
-        // 始点
-        if(pos.x < gameSceneDirector.tileMapStart.x)
+        //始点
+        if (pos.x < sceneDirector.TileMapStart.x)
         {
-            pos.x = gameSceneDirector.tileMapStart.x;
+            pos.x = sceneDirector.TileMapStart.x;
         }
-        if (pos.y < gameSceneDirector.tileMapStart.y)
+        if (pos.y < sceneDirector.TileMapStart.y)
         {
-            pos.y = gameSceneDirector.tileMapStart.y;
+            pos.y = sceneDirector.TileMapStart.y;
         }
-
         // 終点
-        if (gameSceneDirector.tileMapEnd.x < pos.x)
+        if (sceneDirector.TileMapEnd.x < pos.x)
         {
-            pos.x = gameSceneDirector.tileMapEnd.x;
+            pos.x = sceneDirector.TileMapEnd.x;
         }
-        if (gameSceneDirector.tileMapEnd.y < pos.y)
+        if (sceneDirector.TileMapEnd.y < pos.y)
         {
-            pos.y = gameSceneDirector.tileMapEnd.y;
+            pos.y = sceneDirector.TileMapEnd.y;
         }
 
-        // カメラ座標更新
+        // カメラの位置を更新する
         Camera.main.transform.position = pos;
     }
 
     // HPスライダー移動
-    private void MoveSliderHP()
+    void moveSliderHP()
     {
-        Vector3 pos = RectTransformUtility.WorldToScreenPoint(Camera.main,transform.position);
+        // ワールド座標をスクリーン座標に変換
+        Vector3 pos = RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position);
         pos.y -= 50;
         sliderHP.transform.position = pos;
     }

@@ -3,18 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 右クリックメニューに表示する、fileNameはデフォルトのファイル名
-[CreateAssetMenu(fileName ="CharacterSettings",menuName ="ScriptableObjects/CharacterSettings")]
+// 右クリックメニューに表示する、filenameはデフォルトのファイル名
+[CreateAssetMenu(fileName = "CharacterSettings", menuName = "ScriptableObjects/CharacterSettings")]
 public class CharacterSettings : ScriptableObject
 {
     // キャラクターデータ
     public List<CharacterStats> datas;
-    static CharacterSettings instance;
+
+    public static CharacterSettings instance;
     public static CharacterSettings Instance
     {
         get
         {
-            if(!instance)
+            if (!instance)
             {
                 instance = Resources.Load<CharacterSettings>(nameof(CharacterSettings));
             }
@@ -28,6 +29,7 @@ public class CharacterSettings : ScriptableObject
     {
         return (CharacterStats)datas.Find(item => item.Id == id).GetCopy();
     }
+
 }
 
 // 敵の動き
@@ -36,7 +38,7 @@ public enum MoveType
     // プレイヤーに向かって進む
     TargetPlayer,
     // 一方向に進む
-    TargetDirection,
+    TargetDirection
 }
 
 [Serializable]
@@ -44,18 +46,14 @@ public class CharacterStats : BaseStats
 {
     // キャラクターのプレハブ
     public GameObject Prefab;
-    
     // 初期装備武器ID
-    public List<int> DefalutWeaponIds;
-    
+    public List<int> DefaultWeaponIds;
     // 装備可能武器ID
     public List<int> UsableWeaponIds;
-    
-    //装備可能数
+    // 装備可能数
     public int UsableWeaponMax;
-    
     // 移動タイプ
-    public MoveType moveType;
+    public MoveType MoveType;
 
     // TODO アイテム追加
 }

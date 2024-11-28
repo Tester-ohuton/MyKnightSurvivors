@@ -1,12 +1,12 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 // 追加ステータスタイプ
 public enum BonusType
 {
     // 定数で追加
     Bonus,
-    // %で追加
+    // ％で追加
     Boost,
 }
 
@@ -14,7 +14,7 @@ public enum BonusType
 public enum StatsType
 {
     Attack,
-    Defence,
+    Defense,
     MoveSpeed,
     HP,
     MaxHP,
@@ -44,54 +44,42 @@ public class BonusStats
 public class BaseStats
 {
     // Inspectorで表示されるタイトル
-    public string title;
+    public string Title;
 
     // データID
     public int Id;
-
     // 設定レベル
     public int Lv;
-
     // 名前
     public string Name;
-
     // 説明文
     [TextArea] public string Description;
-
     // 攻撃力
     public float Attack;
-
     // 防御力
-    public float Defence;
-
+    public float Defense;
     // 体力
     public float HP;
-
     // 体力最大
     public float MaxHP;
-
     // 経験値
     public float XP;
-
     // 経験値最大
     public float MaxXP;
-
     // 移動速度
     public float MoveSpeed;
-
     // 経験値取得範囲
     public float PickUpRange;
-
     // 生存時間
     public float AliveTime;
 
-    // StatsTypeとの紐づけ インデクサを利用する
+    // StatsTypeとの紐付け　インデクサを利用する
     public float this[StatsType key]
     {
         get
         {
             if (key == StatsType.Attack) return Attack;
-            else if (key == StatsType.Defence) return Defence;
+            else if (key == StatsType.Defense) return Defense;
             else if (key == StatsType.MoveSpeed) return MoveSpeed;
             else if (key == StatsType.HP) return HP;
             else if (key == StatsType.MaxHP) return MaxHP;
@@ -105,7 +93,7 @@ public class BaseStats
         set
         {
             if (key == StatsType.Attack) Attack = value;
-            else if (key == StatsType.Defence) Defence = value;
+            else if (key == StatsType.Defense) Defense = value;
             else if (key == StatsType.MoveSpeed) MoveSpeed = value;
             else if (key == StatsType.HP) HP = value;
             else if (key == StatsType.MaxHP) MaxHP = value;
@@ -124,23 +112,21 @@ public class BaseStats
         {
             return currentValue + value;
         }
-
-        // %で加算
+        // ％で加算
         else if (BonusType.Boost == type)
         {
             return currentValue * (1 + value);
         }
-
         return currentValue;
     }
 
-    // ボーナスを追加する関数
+    // ボーナス追加
     protected void addBonus(BonusStats bonus)
     {
         float value = applyBonus(this[bonus.Key], bonus.Value, bonus.Type);
 
         // 最大値があるもの
-        if(StatsType.HP==bonus.Key)
+        if (StatsType.HP == bonus.Key)
         {
             value = Mathf.Clamp(value, 0, MaxHP);
         }
