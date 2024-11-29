@@ -479,6 +479,8 @@ MonoBehaviour:
   WorldStart: {x: 0, y: 0}
   WorldEnd: {x: 0, y: 0}
   Player: {fileID: 1182280729}
+  parentTextDamage: {fileID: 1485818879}
+  prefabTextDamage: {fileID: 4652615727284287022, guid: cbd5373139fef6c4291877b4fcf0cdf6, type: 3}
 --- !u!4 &140884419
 Transform:
   m_ObjectHideFlags: 0
@@ -15295,7 +15297,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -75}
   m_SizeDelta: {x: 50, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1089523349
@@ -15777,6 +15779,10 @@ PrefabInstance:
       propertyPath: sliderHP
       value: 
       objectReference: {fileID: 1089523349}
+    - target: {fileID: 5314006254847778204, guid: 978f13a79ac7b9c4a90c8de6cd4ce9d7, type: 3}
+      propertyPath: sliderXP
+      value: 
+      objectReference: {fileID: 2131617315}
     - target: {fileID: 5314006254847778204, guid: 978f13a79ac7b9c4a90c8de6cd4ce9d7, type: 3}
       propertyPath: moveSpeed
       value: 8
@@ -24082,7 +24088,7 @@ Canvas:
   m_GameObject: {fileID: 1910912818}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -24347,6 +24353,10 @@ PrefabInstance:
       propertyPath: sliderHP
       value: 
       objectReference: {fileID: 1089523349}
+    - target: {fileID: 8149045748069656638, guid: 4d22a964bfa50064bbdf8aea5a4dd01a, type: 3}
+      propertyPath: sliderXP
+      value: 
+      objectReference: {fileID: 2131617315}
     - target: {fileID: 8149045748069656638, guid: 4d22a964bfa50064bbdf8aea5a4dd01a, type: 3}
       propertyPath: sceneDirector
       value: 
