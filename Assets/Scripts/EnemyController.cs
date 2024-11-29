@@ -136,18 +136,52 @@ public class EnemyController : MonoBehaviour
     // 衝突した時
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
+        attackPlayer(collision);
     }
 
     // 衝突している間
     private void OnCollisionStay2D(Collision2D collision)
     {
-
+        attackPlayer(collision);
     }
 
     // 衝突が終わった時
     private void OnCollisionExit2D(Collision2D collision)
     {
 
+    }
+
+    // プレイヤーへ攻撃する
+    void attackPlayer(Collision2D collision)
+    {
+        // プレイヤー以外
+        if(!collision.gameObject.TryGetComponent<PlayerController>(out var player)) return;
+        // タイマー未消化
+        if (0 < attackCoolDownTimer) return;
+        // 非アクティブ
+        if(State.Alive != state) return;
+
+        player.Damage(Stats.Attack);
+        attackCoolDownTimer = attackCoolDownTimerMax;
+    }
+
+    // ダメージ
+    public float Damage(float attack)
+    {
+        if(State.Alive != state) return 0;
+
+        float damage = Mathf.Max(0, attack - Stats.Defense);
+        Stats.HP = damage;
+
+        sceneDirector.DispDamage(gameObject, damage);
+
+        // TODO 消滅
+        if(Stats.HP < 0)
+        {
+            setDead();
+        }
+
+        // 計算後のダメージを返す
+        return damage;
     }
 }
