@@ -8,12 +8,11 @@ public class PlayerController : MonoBehaviour
     // 移動とアニメーション
     Rigidbody2D rigidbody2d;
     Animator animator;
-    float moveSpeed = 10;
 
-    // 後でInitへ移動
-    [SerializeField] GameSceneDirector sceneDirector;
-    [SerializeField] Slider sliderHP;
-    [SerializeField] Slider sliderXP;
+    // Initでセットされる
+    GameSceneDirector sceneDirector;
+    Slider sliderHP;
+    Slider sliderXP;
 
     public CharacterStats Stats;
 
@@ -21,11 +20,19 @@ public class PlayerController : MonoBehaviour
     float attackCoolDownTimer;
     float attackCoolDownTimerMax = 0.5f;
 
+    // 必要XP
+    List<int> levelRequirements;
+    // 敵生成装置
+    EnemySpawnerController enemySpawner;
+    // 向き
+    public Vector2 Forward;
+    // レベルテキスト
+    Text textLv;
+
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
@@ -38,6 +45,67 @@ public class PlayerController : MonoBehaviour
         moveCamera();
 
         moveSliderHP();
+    }
+
+    // 初期化
+    public void Init(GameSceneDirector sceneDirector, EnemySpawnerController enemySpawner,
+        CharacterStats characterStats,Text textLv,Slider sliderHP,Slider sliderXP)
+    {
+        // 変数初期化
+        levelRequirements = new List<int>();
+
+        this.sceneDirector = sceneDirector;
+        this.enemySpawner = enemySpawner;
+        this.Stats = characterStats;
+        this.textLv = textLv;
+        this.sliderHP = sliderHP;
+        this.sliderXP = sliderXP;
+
+        rigidbody2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+
+        // プレイヤーの向き
+        Forward = Vector2.right;
+
+        // 経験値の闘値リスト作成
+        levelRequirements.Add(0);
+        for (int i = 1; i < 1000; i++)
+        {
+            // 1つ前の闘値
+            int prexp = levelRequirements[i - 1];
+            // 41以降はレベル毎に16XPずつ増加
+            int addxp = 16;
+
+            // レベル2までレベルアップするのに5XP
+            if(i == 1)
+            {
+                addxp = 5;
+            }
+            else if(i <= 20)
+            {
+                addxp = 10;
+            }
+            else if(i <= 40)
+            {
+                addxp = 13;
+            }
+
+            // 必要経験値
+            levelRequirements.Add(prexp + addxp);
+        }
+
+        // LV2の必要経験値
+        Stats.MaxXP = levelRequirements[1];
+
+        // UI初期化
+        setTextLv();
+        setSliderHP();
+        setSliderXP();
+
+        moveSliderHP();
+
+        // TODO 武器データセット
+
     }
 
     // プレイヤーの移動に関する処理
@@ -76,7 +144,7 @@ public class PlayerController : MonoBehaviour
         if (Vector2.zero == dir) return;
 
         // プレイヤー移動
-        rigidbody2d.position += dir.normalized * moveSpeed * Time.deltaTime;
+        rigidbody2d.position += dir.normalized * Stats.MoveSpeed * Time.deltaTime;
 
         // アニメーションを再生する
         animator.SetTrigger(trigger);
@@ -221,5 +289,11 @@ public class PlayerController : MonoBehaviour
         {
             attackCoolDownTimer -= Time.deltaTime;
         }
+    }
+
+    // レベルテキスト更新
+    void setTextLv()
+    {
+        textLv.text = "Lv " + Stats.Lv;
     }
 }
