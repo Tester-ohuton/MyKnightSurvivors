@@ -30,6 +30,20 @@ public class CharacterSettings : ScriptableObject
         return (CharacterStats)datas.Find(item => item.Id == id).GetCopy();
     }
 
+    // 敵生成
+    public EnemyController CreateEnemy(int id,GameSceneDirector sceneDirector,Vector3 position)
+    {
+        // ステータス取得
+        CharacterStats stats = Instance.Get(id);
+        // オブジェクト
+        GameObject obj = Instantiate(stats.Prefab, position, Quaternion.identity);
+        
+        // データセット
+        EnemyController ctrl= obj.GetComponent<EnemyController>();
+        ctrl.Init(sceneDirector, stats);
+
+        return ctrl;
+    }
 }
 
 // 敵の動き

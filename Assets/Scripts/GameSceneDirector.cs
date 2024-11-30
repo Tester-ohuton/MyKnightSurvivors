@@ -25,11 +25,15 @@ public class GameSceneDirector : MonoBehaviour
     public float GameTimer;
     public float OldSeconds;
 
+    // “G¶¬
+    [SerializeField] EnemySpawnerController enemySpawner;
+
     // Start is called before the first frame update
     void Start()
     {
         // ‰Šúİ’è
         OldSeconds = -1;
+        enemySpawner.Init(this, tilemapCollider);
 
         // ƒJƒƒ‰‚ÌˆÚ“®‚Å‚«‚é”ÍˆÍ
         foreach (Transform item in grid.GetComponentInChildren<Transform>())

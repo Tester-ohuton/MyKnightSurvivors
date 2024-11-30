@@ -14,5 +14,18 @@ public static class Utils
         return minutes.ToString() + ":" + seconds.ToString("00");
     }
 
+    // 当たり判定のあるタイルかどうか調べる
+    public static bool IsColliderTile(Tilemap tilemapCollider,Vector2 position)
+    {
+        // セル位置に変換
+        Vector3Int cellPosition = tilemapCollider.WorldToCell(position);
 
+        // 当たり判定あり
+        if(tilemapCollider.GetTile(cellPosition))
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
