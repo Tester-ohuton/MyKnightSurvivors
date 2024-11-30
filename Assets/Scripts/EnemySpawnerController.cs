@@ -64,9 +64,10 @@ public class EnemySpawnerController : MonoBehaviour
     void Update()
     {
         // 敵生成データ更新
-
+        updateEnemySpawnData();
+        
         // 生成
-
+        spawnEnemy();
     }
 
     // 初期化

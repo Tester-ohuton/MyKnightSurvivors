@@ -24135,7 +24135,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb97c1901eddabf4d9ef4cc27cad58df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySpawnDatas: []
+  enemySpawnDatas:
+  - Title: "0:00 \u30B3\u30A6\u30E2\u30EA"
+    ElaapsedMinutes: 0
+    ElapsedSeconds: 0
+    SpawnType: 0
+    SpawnDuration: 5
+    SpawnCountMax: 20
+    EnemyIDs: 64000000
+  - Title: "0:10 \u30B9\u30E9\u30A4\u30E0"
+    ElaapsedMinutes: 0
+    ElapsedSeconds: 10
+    SpawnType: 0
+    SpawnDuration: 15
+    SpawnCountMax: 20
+    EnemyIDs: 65000000
+  - Title: "2:30 \u30B3\u30A6\u30E2\u30EA/\u30B9\u30E9\u30A4\u30E0"
+    ElaapsedMinutes: 2
+    ElapsedSeconds: 30
+    SpawnType: 0
+    SpawnDuration: 10
+    SpawnCountMax: 30
+    EnemyIDs: 6400000065000000
+  - Title: "0:30 \u30B4\u30D6\u30EA\u30F3"
+    ElaapsedMinutes: 0
+    ElapsedSeconds: 30
+    SpawnType: 0
+    SpawnDuration: 10
+    SpawnCountMax: 30
+    EnemyIDs: 66000000
+  - Title: "0:50 \u30BE\u30F3\u30D3"
+    ElaapsedMinutes: 0
+    ElapsedSeconds: 50
+    SpawnType: 0
+    SpawnDuration: 1
+    SpawnCountMax: 1
+    EnemyIDs: 67000000
+  - Title: "1:10 \u30B9\u30B1\u30EB\u30C8\u30F3"
+    ElaapsedMinutes: 1
+    ElapsedSeconds: 10
+    SpawnType: 0
+    SpawnDuration: 1
+    SpawnCountMax: 1
+    EnemyIDs: 68000000
+  - Title: "1:30 \u30F4\u30A1\u30F3\u30D1\u30A4\u30A2"
+    ElaapsedMinutes: 1
+    ElapsedSeconds: 30
+    SpawnType: 0
+    SpawnDuration: 1
+    SpawnCountMax: 1
+    EnemyIDs: 69000000
+  - Title: "1:50 \u5927\u7FA4\u30B3\u30A6\u30E2\u30EA"
+    ElaapsedMinutes: 1
+    ElapsedSeconds: 50
+    SpawnType: 1
+    SpawnDuration: 4
+    SpawnCountMax: 30
+    EnemyIDs: c8000000
+  - Title: "2:10 \u5927\u7FA4\u30B9\u30E9\u30A4\u30E0"
+    ElaapsedMinutes: 2
+    ElapsedSeconds: 10
+    SpawnType: 1
+    SpawnDuration: 1
+    SpawnCountMax: 10
+    EnemyIDs: c9000000
+  - Title: "2:30 \u30DC\u30B9"
+    ElaapsedMinutes: 2
+    ElapsedSeconds: 30
+    SpawnType: 0
+    SpawnDuration: 1
+    SpawnCountMax: 1
+    EnemyIDs: f4010000
 --- !u!1 &1880750180
 GameObject:
   m_ObjectHideFlags: 0
