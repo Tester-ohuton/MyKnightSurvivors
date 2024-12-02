@@ -69,7 +69,7 @@ public class GameSceneDirector : MonoBehaviour
         }
 
         // 画面縦半分の描画範囲（デフォルトで5タイル）
-        float cameraSize = Camera.main.orthographicSize;
+        float cameraSize = Camera.main.orthographicSize - 1;
         // 画面縦横比（16:9想定）
         float aspect = (float)Screen.width / (float)Screen.height;
         // プレイヤーの移動できる範囲

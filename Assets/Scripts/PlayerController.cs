@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
     public Vector2 Forward;
     // レベルテキスト
     Text textLv;
+    // 現在装備中の武器
+    public List<BaseWeaponSpawner> WeaponSpawners;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         // 変数初期化
         levelRequirements = new List<int>();
-
+        WeaponSpawners = new List<BaseWeaponSpawner>();
         this.sceneDirector = sceneDirector;
         this.enemySpawner = enemySpawner;
         this.Stats = characterStats;
@@ -104,8 +106,11 @@ public class PlayerController : MonoBehaviour
 
         moveSliderHP();
 
-        // TODO 武器データセット
-
+        // 武器データセット
+        foreach(var item in Stats.DefaultWeaponIds)
+        {
+            addWeaponSpawner(item);
+        }
     }
 
     // プレイヤーの移動に関する処理
@@ -295,5 +300,29 @@ public class PlayerController : MonoBehaviour
     void setTextLv()
     {
         textLv.text = "Lv " + Stats.Lv;
+    }
+
+    // 武器を追加
+    void addWeaponSpawner(int id)
+    {
+        // TODO 装備済みならレベルアップ
+        BaseWeaponSpawner spawner = WeaponSpawners.Find(item => item.Stats.Id == id);
+
+        if (spawner)
+        {
+            return;
+        }
+
+        // 新規追加
+        spawner = WeaponSpawnerSettings.Instance.CreateWeaponSpawner(id,enemySpawner,transform);
+
+        if(spawner == null)
+        {
+            Debug.Log("武器データがありません");
+            return;
+        }
+
+        // 装備済みリストへ追加
+        WeaponSpawners.Add(spawner);
     }
 }
