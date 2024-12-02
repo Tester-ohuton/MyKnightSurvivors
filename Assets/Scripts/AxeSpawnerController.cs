@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlashSpawnerController : BaseWeaponSpawner
+public class AxeSpawnerController : BaseWeaponSpawner
 {
     // 一度の生成に時差をつける
     int onceSpawnCount;
@@ -27,10 +27,10 @@ public class SlashSpawnerController : BaseWeaponSpawner
         pos.x += 2f * dir;
 
         // 生成
-        SlashController ctrl = (SlashController)createWeapon(pos,transform);
+        AxeController ctrl = (AxeController)createWeapon(pos, transform);
 
-        // 左右で角度を変える
-        ctrl.transform.eulerAngles = ctrl.transform.eulerAngles * dir;
+        // 斜め上に力を加える
+        ctrl.GetComponent<Rigidbody2D>().AddForce(new Vector2(100 * dir,350));
 
         // 次の生成タイマー
         spawnTimer = onceSpawmTime;
