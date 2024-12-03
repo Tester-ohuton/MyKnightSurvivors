@@ -127,7 +127,8 @@ public class EnemyController : MonoBehaviour
         // 経験値を作成
         if (createXP)
         {
-            // TODO 経験値生成
+            // 経験値生成
+
         }
 
         state = State.Dead;
