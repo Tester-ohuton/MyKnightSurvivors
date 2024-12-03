@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14a752b8a67e9154c8c8d6f58fb0c4c5, type: 3}
+  m_Name: ItemSettings
+  m_EditorClassIdentifier: 
+  datas:
+  - Title: "\u3010\u6B66\u5668\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\u7528\u3011\u653B\u6483\u529B+10%"
+    Id: 0
+    Name: "\u6B66\u5668\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\u7528"
+    Description: "\u653B\u6483\u529B+10%"
+    Icon: {fileID: 0}
+    Bonuses:
+    - Type: 1
+      Key: 0
+      Value: 0.1
+  - Title: "\u3010\u6B66\u5668\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\u7528\u3011\u653B\u6483\u901F\u5EA6+10%"
+    Id: 1
+    Name: "\u6B66\u5668\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\u7528"
+    Description: "\u653B\u6483\u901F\u5EA6+10%"
+    Icon: {fileID: 0}
+    Bonuses:
+    - Type: 1
+      Key: 10
+      Value: -0.1
+    - Type: 1
+      Key: 11
+      Value: -0.1
+  - Title: "\u3010\u6B66\u5668\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\u7528\u3011\u751F\u6210\u6570+2\u653B\u6483\u529B+3%"
+    Id: 2
+    Name: "\u6B66\u5668\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\u7528"
+    Description: "\u751F\u6210\u6570+2"
+    Icon: {fileID: 0}
+    Bonuses:
+    - Type: 0
+      Key: 9
+      Value: 2
+    - Type: 1
+      Key: 0
+      Value: 0.03
+  - Title: "\u30A2\u30FC\u30DE\u30FC"
+    Id: 3
+    Name: "\u30A2\u30FC\u30DE\u30FC"
+    Description: "\u9632\u5FA1\u529B+10%"
+    Icon: {fileID: -1699141947, guid: fe9d176ce4b73467ab961a542a54e03d, type: 3}
+    Bonuses:
+    - Type: 1
+      Key: 1
+      Value: 0.1
+  - Title: "\u30B7\u30E5\u30FC\u30BA"
+    Id: 4
+    Name: "\u30B7\u30E5\u30FC\u30BA"
+    Description: "\u30B9\u30D4\u30FC\u30C9+5%"
+    Icon: {fileID: 1782651153, guid: fe9d176ce4b73467ab961a542a54e03d, type: 3}
+    Bonuses:
+    - Type: 1
+      Key: 2
+      Value: 0.05
+  - Title: "\u30CF\u30FC\u30C8"
+    Id: 5
+    Name: "\u30CF\u30FC\u30C8"
+    Description: "HP\u56DE\u5FA9+5%"
+    Icon: {fileID: -536373198, guid: fe9d176ce4b73467ab961a542a54e03d, type: 3}
+    Bonuses:
+    - Type: 0
+      Key: 3
+      Value: 50
+  - Title: "\u30AA\u30FC\u30D6"
+    Id: 6
+    Name: "\u30AA\u30FC\u30D6"
+    Description: "\u7D4C\u9A13\u5024\u53D6\u5F97\u7BC4\u56F2+0.5"
+    Icon: {fileID: 330299531, guid: fe9d176ce4b73467ab961a542a54e03d, type: 3}
+    Bonuses:
+    - Type: 0
+      Key: 7
+      Value: 0.5
