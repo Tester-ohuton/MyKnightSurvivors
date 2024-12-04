@@ -79,6 +79,58 @@ public class BaseWeaponSpawner : MonoBehaviour
         return false;
     }
 
-    // TODO: レベルアップ時のデータを返す
+    // レベルアップ時のデータを返す
+    public WeaponSpawnerStats GetLevelUpStats(bool isNextLevel = false)
+    {
+        // 次のレベル
+        int nextLv = Stats.Lv + 1;
 
+        // 次のレベルがあるかどうか調べて、あれば上書き
+        WeaponSpawnerStats ret = WeaponSpawnerSettings.Instance.Get(Stats.Id,nextLv);
+
+        // 上書きデータあり
+        if(Stats.Lv < ret.Lv)
+        {
+
+        }
+        else
+        {
+            // 説明をアイテムのものに書き換える
+            ItemData itemData =ItemSettings.Instance.Get(Stats.LevelUpItemId);
+            ret.Description = itemData.Description;
+        }
+
+        // レベルを1あげて返すかどうか
+        if(isNextLevel)
+        {
+            ret.Lv = nextLv;
+        }
+
+        return ret;
+    }
+
+    // レベルアップ
+    public void LevelUp()
+    {
+        // 現在のレベル
+        int lv =Stats.Lv;
+
+        // 次のレベルのデータ
+        WeaponSpawnerStats nextData = GetLevelUpStats();
+
+        // 現在のレベルと違えば上書き
+        if (Stats.Lv < nextData.Lv)
+        {
+            Stats = nextData;
+        }
+        // なければアイテムデータを追加
+        else
+        {
+            // 説明をアイテムのものに書き換える
+            ItemData itemData = ItemSettings.Instance.Get(Stats.LevelUpItemId);
+            Stats.AddItemData(itemData);
+        }
+
+        Stats.Lv = lv + 1;
+    }
 }

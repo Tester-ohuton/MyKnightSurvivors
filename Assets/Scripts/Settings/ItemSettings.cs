@@ -53,3 +53,23 @@ public class ItemData
         return (ItemData)MemberwiseClone();
     }
 }
+
+// レベルアップや宝箱のデータ
+public class BonusData
+{
+    // 武器
+    public WeaponSpawnerStats WeaponSpawnerStats;
+    // アイテム
+    public ItemData ItemData;
+
+    // コンストラクタ
+    public BonusData(WeaponSpawnerStats data)
+    {
+        WeaponSpawnerStats = data;
+    }
+
+    public BonusData(ItemData data)
+    {
+        ItemData = data;
+    }
+}
