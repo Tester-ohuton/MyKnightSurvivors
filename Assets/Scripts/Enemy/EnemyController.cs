@@ -127,7 +127,8 @@ public class EnemyController : MonoBehaviour
         // 経験値を作成
         if (createXP)
         {
-            // TODO 経験値生成
+            // 経験値生成
+            sceneDirector.CreateXP(this);
         }
 
         state = State.Dead;
@@ -171,7 +172,12 @@ public class EnemyController : MonoBehaviour
         if(State.Alive != state) return 0;
 
         float damage = Mathf.Max(0, attack - Stats.Defense);
-        Stats.HP = damage;
+
+        /*
+         // 2024/12/04 =になっていたのを修正
+         敵のHPが減らないバグ修正
+         */
+        Stats.HP -= damage;
 
         sceneDirector.DispDamage(gameObject, damage);
 

@@ -33,6 +33,9 @@ public class GameSceneDirector : MonoBehaviour
     [SerializeField] Slider sliderXP;
     [SerializeField] Text textLv;
 
+    // 経験値
+    [SerializeField] List<GameObject> prefabXP;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -101,5 +104,30 @@ public class GameSceneDirector : MonoBehaviour
 
         textTimer.text=Utils.GetTextTimer(GameTimer);
         OldSeconds = seconds;
+    }
+
+    // 経験値取得
+    public void CreateXP(EnemyController enemy)
+    {
+        float xp = Random.Range(enemy.Stats.XP,enemy.Stats.MaxXP);
+        if (xp < 0) return;
+
+        // 5未満
+        GameObject prefab = prefabXP[0];
+
+        // 10以上
+        if(10 <= xp)
+        {
+            prefab = prefabXP[2];
+        }
+        else if(5 <= xp)
+        {
+            prefab = prefabXP[1];
+        }
+
+        // 初期化
+        GameObject obj = Instantiate(prefab,enemy.transform.position,Quaternion.identity);
+        XPController ctrl = obj.GetComponent<XPController>();
+        ctrl.Init(this,xp);
     }
 }

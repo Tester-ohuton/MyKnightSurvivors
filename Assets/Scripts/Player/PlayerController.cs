@@ -325,4 +325,32 @@ public class PlayerController : MonoBehaviour
         // 装備済みリストへ追加
         WeaponSpawners.Add(spawner);
     }
+
+    // 経験値取得
+    public void GetXP(float xp)
+    {
+        Stats.XP += xp;
+
+        // レベル上限
+        if (levelRequirements.Count - 1 < Stats.Lv) return;
+
+        // レベルアップ
+        if (levelRequirements[Stats.Lv] <= Stats.XP)
+        {
+            Stats.Lv++;
+
+            // 次の経験値
+            if(Stats.Lv < levelRequirements.Count)
+            {
+                Stats.XP = 0;
+                Stats.MaxXP = levelRequirements[Stats.Lv];
+            }
+
+            // レベルアップパネル表示
+            setTextLv();
+        }
+
+        // 表示更新
+        setSliderXP();
+    }
 }
