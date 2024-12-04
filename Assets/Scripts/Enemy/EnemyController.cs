@@ -128,7 +128,7 @@ public class EnemyController : MonoBehaviour
         if (createXP)
         {
             // ŒoŒ±’l¶¬
-
+            sceneDirector.CreateXP(this);
         }
 
         state = State.Dead;
@@ -172,7 +172,12 @@ public class EnemyController : MonoBehaviour
         if(State.Alive != state) return 0;
 
         float damage = Mathf.Max(0, attack - Stats.Defense);
-        Stats.HP = damage;
+
+        /*
+         // 2024/12/04 =‚É‚È‚Á‚Ä‚¢‚½‚Ì‚ğC³
+         “G‚ÌHP‚ªŒ¸‚ç‚È‚¢ƒoƒOC³
+         */
+        Stats.HP -= damage;
 
         sceneDirector.DispDamage(gameObject, damage);
 

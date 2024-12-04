@@ -9,7 +9,7 @@ public class BaseWeapon : MonoBehaviour
     // 武器ステータス
     protected WeaponSpawnerStats stats;
     // 物理挙動
-    protected Rigidbody2D rigidbody2D;
+    protected Rigidbody2D rigidbody2d;
     // 方向
     protected Vector2 forward;
 
@@ -23,7 +23,7 @@ public class BaseWeapon : MonoBehaviour
         // 進む方向
         this.forward = forward;
         // 物理挙動
-        this.rigidbody2D = rigidbody2D;
+        this.rigidbody2d = GetComponent<Rigidbody2D>();
 
         // 生存時間があれば設定する
         if(-1 < stats.AliveTime)

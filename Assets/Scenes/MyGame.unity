@@ -1351,7 +1351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &412750892
 AudioSource:
   m_ObjectHideFlags: 0
@@ -23996,33 +23996,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawnDatas:
+  - Title: "0:00 \u30DC\u30B9"
+    ElaapsedMinutes: 0
+    ElapsedSeconds: 0
+    SpawnType: 0
+    SpawnDuration: 1
+    SpawnCountMax: 1
+    EnemyIDs: f4010000
   - Title: "0:00 \u30B3\u30A6\u30E2\u30EA"
     ElaapsedMinutes: 0
     ElapsedSeconds: 0
     SpawnType: 0
     SpawnDuration: 5
-    SpawnCountMax: 20
+    SpawnCountMax: 5
     EnemyIDs: 64000000
   - Title: "0:10 \u30B9\u30E9\u30A4\u30E0"
     ElaapsedMinutes: 0
     ElapsedSeconds: 10
     SpawnType: 0
     SpawnDuration: 15
-    SpawnCountMax: 20
+    SpawnCountMax: 5
     EnemyIDs: 65000000
-  - Title: "2:30 \u30B3\u30A6\u30E2\u30EA/\u30B9\u30E9\u30A4\u30E0"
-    ElaapsedMinutes: 2
-    ElapsedSeconds: 30
-    SpawnType: 0
-    SpawnDuration: 10
-    SpawnCountMax: 30
-    EnemyIDs: 6400000065000000
-  - Title: "0:30 \u30B4\u30D6\u30EA\u30F3"
+  - Title: "0:30 \u30B3\u30A6\u30E2\u30EA/\u30B9\u30E9\u30A4\u30E0"
     ElaapsedMinutes: 0
     ElapsedSeconds: 30
     SpawnType: 0
     SpawnDuration: 10
-    SpawnCountMax: 30
+    SpawnCountMax: 5
+    EnemyIDs: 6400000065000000
+  - Title: "0:50 \u30B4\u30D6\u30EA\u30F3"
+    ElaapsedMinutes: 0
+    ElapsedSeconds: 50
+    SpawnType: 0
+    SpawnDuration: 10
+    SpawnCountMax: 5
     EnemyIDs: 66000000
   - Title: "0:50 \u30BE\u30F3\u30D3"
     ElaapsedMinutes: 0
@@ -24045,27 +24052,27 @@ MonoBehaviour:
     SpawnDuration: 1
     SpawnCountMax: 1
     EnemyIDs: 69000000
-  - Title: "1:50 \u5927\u7FA4\u30B3\u30A6\u30E2\u30EA"
-    ElaapsedMinutes: 1
-    ElapsedSeconds: 50
+  - Title: "2:00 \u5927\u7FA4\u30B3\u30A6\u30E2\u30EA"
+    ElaapsedMinutes: 2
+    ElapsedSeconds: 0
     SpawnType: 1
     SpawnDuration: 4
-    SpawnCountMax: 30
+    SpawnCountMax: 10
     EnemyIDs: c8000000
-  - Title: "2:10 \u5927\u7FA4\u30B9\u30E9\u30A4\u30E0"
-    ElaapsedMinutes: 2
-    ElapsedSeconds: 10
+  - Title: "3:00 \u5927\u7FA4\u30B9\u30E9\u30A4\u30E0"
+    ElaapsedMinutes: 3
+    ElapsedSeconds: 0
     SpawnType: 1
     SpawnDuration: 1
     SpawnCountMax: 10
     EnemyIDs: c9000000
-  - Title: "2:30 \u30DC\u30B9"
-    ElaapsedMinutes: 2
-    ElapsedSeconds: 30
-    SpawnType: 0
+  - Title: "4:00 \u30DC\u30B9"
+    ElaapsedMinutes: 4
+    ElapsedSeconds: 0
+    SpawnType: 1
     SpawnDuration: 1
     SpawnCountMax: 1
-    EnemyIDs: f4010000
+    EnemyIDs: c9000000
 --- !u!1 &1880750180
 GameObject:
   m_ObjectHideFlags: 0

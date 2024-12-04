@@ -58,7 +58,7 @@ MonoBehaviour:
     Description: 
     Attack: 10
     Defense: 0
-    HP: 29
+    HP: 19
     MaxHP: 0
     XP: 0.5
     MaxXP: 1
@@ -77,7 +77,7 @@ MonoBehaviour:
     Description: 
     Attack: 15
     Defense: 0
-    HP: 50
+    HP: 25
     MaxHP: 0
     XP: 1
     MaxXP: 2
@@ -96,7 +96,7 @@ MonoBehaviour:
     Description: 
     Attack: 15
     Defense: 0
-    HP: 60
+    HP: 30
     MaxHP: 0
     XP: 1.5
     MaxXP: 2
@@ -115,7 +115,7 @@ MonoBehaviour:
     Description: 
     Attack: 10
     Defense: 0
-    HP: 80
+    HP: 40
     MaxHP: 0
     XP: 2
     MaxXP: 3
@@ -134,7 +134,7 @@ MonoBehaviour:
     Description: 
     Attack: 20
     Defense: 0
-    HP: 100
+    HP: 50
     MaxHP: 0
     XP: 3
     MaxXP: 6
