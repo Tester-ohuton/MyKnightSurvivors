@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -186,6 +187,8 @@ public class PlayerController : MonoBehaviour
             pos.y = sceneDirector.WorldEnd.y;
             rigidbody2d.position = pos;
         }
+
+        Forward = dir;
     }
 
     // カメラ移動
@@ -238,10 +241,18 @@ public class PlayerController : MonoBehaviour
         // ダメージ表示
         sceneDirector.DispDamage(gameObject, damage);
 
-        // TODO ゲームオーバー
+        // ゲームオーバー
         if(Stats.HP < 0)
         {
+            // 操作不可
+            SetEnabled(false);
 
+            // アニメーション
+            transform.DOScale(new Vector2(5,0),2).SetUpdate(true)
+                .OnComplete(()=>
+                {
+                    sceneDirector.DispPanelGameOver();
+                });
         }
 
         if (Stats.HP < 0) Stats.HP = 0;
@@ -353,6 +364,8 @@ public class PlayerController : MonoBehaviour
             }
 
             // レベルアップパネル表示
+            sceneDirector.DispPanelLevelUp();
+
             setTextLv();
         }
 

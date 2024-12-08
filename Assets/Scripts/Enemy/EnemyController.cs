@@ -181,9 +181,10 @@ public class EnemyController : MonoBehaviour
 
         sceneDirector.DispDamage(gameObject, damage);
 
-        // TODO è¡ñ≈
+        // è¡ñ≈
         if(Stats.HP < 0)
         {
+            sceneDirector.AddDefeatedEnemy();
             setDead();
         }
 

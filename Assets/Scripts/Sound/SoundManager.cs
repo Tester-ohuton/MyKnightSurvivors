@@ -78,7 +78,8 @@ public class SESoundData
     {
         Attack,
         Jump,
-        ItemPickup
+        ItemPickup,
+        Button,
     }
 
     public SE se;
