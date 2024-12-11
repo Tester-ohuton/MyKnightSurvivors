@@ -15,7 +15,7 @@ MonoBehaviour:
   datas:
   - Title: "\u30B9\u30E9\u30C3\u30B7\u30E5"
     Id: 0
-    Lv: 0
+    Lv: 1
     Name: "\u30B9\u30E9\u30C3\u30B7\u30E5"
     Description: 
     Attack: 15

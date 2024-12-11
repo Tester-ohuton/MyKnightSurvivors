@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Tilemaps;
 using DG.Tweening;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class GameSceneDirector : MonoBehaviour
 {
@@ -32,8 +32,8 @@ public class GameSceneDirector : MonoBehaviour
     [SerializeField] EnemySpawnerController enemySpawner;
 
     // プレイヤー生成
-    [SerializeField] Slider sliderHP;
     [SerializeField] Slider sliderXP;
+    [SerializeField] Slider sliderHP;
     [SerializeField] Text textLv;
 
     // 経験値
@@ -68,7 +68,6 @@ public class GameSceneDirector : MonoBehaviour
     // 終了時間
     [SerializeField] float GameOverTime;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -76,10 +75,10 @@ public class GameSceneDirector : MonoBehaviour
         playerWeaponIcons = new Dictionary<BaseWeaponSpawner, GameObject>();
         playerItemIcons = new Dictionary<ItemData, GameObject>();
 
-        // プレイヤー生成
+        // プレイヤー作成
         int playerId = TitleSceneDirector.CharacterId;
-        Player = CharacterSettings.Instance.CreatePlayer(playerId,this,enemySpawner,
-            textLv,sliderHP,sliderXP);
+        Player = CharacterSettings.Instance.CreatePlayer(playerId, this, enemySpawner,
+            textLv, sliderHP, sliderXP);
 
         // 初期設定
         OldSeconds = -1;
@@ -112,7 +111,7 @@ public class GameSceneDirector : MonoBehaviour
         }
 
         // 画面縦半分の描画範囲（デフォルトで5タイル）
-        float cameraSize = Camera.main.orthographicSize - 1;
+        float cameraSize = Camera.main.orthographicSize;
         // 画面縦横比（16:9想定）
         float aspect = (float)Screen.width / (float)Screen.height;
         // プレイヤーの移動できる範囲
@@ -120,45 +119,46 @@ public class GameSceneDirector : MonoBehaviour
         WorldEnd = new Vector2(TileMapEnd.x + cameraSize * aspect, TileMapEnd.y + cameraSize);
 
         // 初期値
-        treasureChestTimer = Random.Range(treasureChestTimerMin,treasureChestTimerMax);
+        treasureChestTimer = Random.Range(treasureChestTimerMin, treasureChestTimerMax);
         DefeatedEnemyCount = -1;
 
         // アイコン更新
-        DispPlayerIcon();
+        dispPlayerIcon();
 
-        // 倒した敵の数
+        // 倒した敵更新
         AddDefeatedEnemy();
 
         // TimeScaleリセット
-        SetEnabled();
+        setEnabled();
 
-        SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Battle);
+        //SoundController.Instance.PlayBGM(0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        // タイマー更新
-        UpdateGameTimer();
+        // ゲームタイマー更新
+        updateGameTimer();
 
         // 宝箱生成
-        UpdateTreasureChestSpawner();
-    
+        updateTreasureChestSpawner();
+
         // 秒数経過でゲームオーバー
-        if(GameOverTime < GameTimer)
+        if (GameOverTime < GameTimer)
         {
             DispPanelGameOver();
         }
     }
 
     // ダメージ表示
-    public void DispDamage(GameObject target,float damage)
+    public void DispDamage(GameObject target, float damage)
     {
-        GameObject obj = Instantiate(prefabTextDamage,parentTextDamage);
-        obj.GetComponent<TextDamageController>().Init(target,damage);
+        GameObject obj = Instantiate(prefabTextDamage, parentTextDamage);
+        obj.GetComponent<TextDamageController>().Init(target, damage);
     }
 
-    void UpdateGameTimer()
+    // ゲームタイマー
+    void updateGameTimer()
     {
         GameTimer += Time.deltaTime;
 
@@ -166,37 +166,38 @@ public class GameSceneDirector : MonoBehaviour
         int seconds = (int)GameTimer % 60;
         if (seconds == OldSeconds) return;
 
-        textTimer.text=Utils.GetTextTimer(GameTimer);
+        textTimer.text = Utils.GetTextTimer(GameTimer);
         OldSeconds = seconds;
     }
 
     // 経験値取得
     public void CreateXP(EnemyController enemy)
     {
-        float xp = Random.Range(enemy.Stats.XP,enemy.Stats.MaxXP);
-        if (xp < 0) return;
+        float xp = Random.Range(enemy.Stats.XP, enemy.Stats.MaxXP);
+        if (0 > xp) return;
 
         // 5未満
         GameObject prefab = prefabXP[0];
 
         // 10以上
-        if(10 <= xp)
+        if (10 <= xp)
         {
             prefab = prefabXP[2];
         }
-        else if(5 <= xp)
+        // 5以上
+        else if (5 <= xp)
         {
             prefab = prefabXP[1];
         }
 
         // 初期化
-        GameObject obj = Instantiate(prefab,enemy.transform.position,Quaternion.identity);
+        GameObject obj = Instantiate(prefab, enemy.transform.position, Quaternion.identity);
         XPController ctrl = obj.GetComponent<XPController>();
-        ctrl.Init(this,xp);
+        ctrl.Init(this, xp);
     }
 
     // ゲーム再開/停止
-    void SetEnabled(bool enabled = true)
+    void setEnabled(bool enabled = true)
     {
         this.enabled = enabled;
         Time.timeScale = (enabled) ? 1 : 0;
@@ -208,11 +209,10 @@ public class GameSceneDirector : MonoBehaviour
     {
         // アイテム追加
         Player.AddBonusData(bonusData);
-        // ステータス取得
-        DispPlayerIcon();
-
+        // ステータス反映
+        dispPlayerIcon();
         // ゲーム再開
-        SetEnabled();
+        setEnabled();
     }
 
     // レベルアップ時
@@ -226,7 +226,7 @@ public class GameSceneDirector : MonoBehaviour
         // 武器の数が足りない場合は減らす
         int listCount = Player.GetUsableWeaponIds().Count;
 
-        if(listCount < randomCount)
+        if (listCount < randomCount)
         {
             randomCount = listCount;
         }
@@ -236,13 +236,15 @@ public class GameSceneDirector : MonoBehaviour
         {
             // 装備可能武器からランダム
             WeaponSpawnerStats randomItem = Player.GetRandomSpawnerStats();
-            // データなし
-            if (randomItem != null) continue;
+            // データ無し
+            if (null == randomItem) continue;
 
             // かぶりチェック
-            WeaponSpawnerStats findItem = items.Find(item => item.Id == randomItem.Id);
+            WeaponSpawnerStats findItem
+                = items.Find(item => item.Id == randomItem.Id);
 
-            if (findItem != null)
+            // かぶりなし
+            if (null == findItem)
             {
                 items.Add(randomItem);
             }
@@ -256,36 +258,35 @@ public class GameSceneDirector : MonoBehaviour
         // レベルアップパネル表示
         panelLevelUp.DispPanel(items);
         // ゲーム停止
-        SetEnabled(false);
+        setEnabled(false);
     }
 
     // 宝箱パネルを表示
     public void DispPanelTreasureChest()
     {
         // ランダムアイテム
-        ItemData item = GetRandomItemData();
-
-        // データなし
-        if (item == null) return;
+        ItemData item = getRandomItemData();
+        // データ無し
+        if (null == item) return;
 
         // パネル表示
         panelTreasureChest.DispPanel(item);
         // ゲーム中断
-        SetEnabled(false);
+        setEnabled(false);
     }
 
     // アイテムをランダムで返す
-    ItemData GetRandomItemData()
+    ItemData getRandomItemData()
     {
-        if (treasureChestItemIds.Count < 1) return null;
+        if (1 > treasureChestItemIds.Count) return null;
 
         // 抽選
-        int rnd = Random.Range(0,treasureChestItemIds.Count);
+        int rnd = Random.Range(0, treasureChestItemIds.Count);
         return ItemSettings.Instance.Get(treasureChestItemIds[rnd]);
     }
 
     // 宝箱生成
-    void UpdateTreasureChestSpawner()
+    void updateTreasureChestSpawner()
     {
         // タイマー
         treasureChestTimer -= Time.deltaTime;
@@ -308,7 +309,7 @@ public class GameSceneDirector : MonoBehaviour
     }
 
     // プレイヤーアイコンセット
-    void SetPlayerIcon(GameObject obj, Vector2 pos, Sprite icon, int count)
+    void setPlayerIcon(GameObject obj, Vector2 pos, Sprite icon, int count)
     {
         // 画像
         Transform image = obj.transform.Find("ImageIcon");
@@ -323,7 +324,7 @@ public class GameSceneDirector : MonoBehaviour
     }
 
     // アイコンの表示を更新
-    void DispPlayerIcon()
+    void dispPlayerIcon()
     {
         // 武器アイコン表示位置
         float x = PlayerIconStartX;
@@ -343,7 +344,7 @@ public class GameSceneDirector : MonoBehaviour
             }
 
             // アイコンセット
-            SetPlayerIcon(obj, new Vector2(x, y), item.Stats.Icon, item.Stats.Lv);
+            setPlayerIcon(obj, new Vector2(x, y), item.Stats.Icon, item.Stats.Lv);
 
             // 次の位置
             x += w;
@@ -366,7 +367,7 @@ public class GameSceneDirector : MonoBehaviour
             }
 
             // アイコンセット
-            SetPlayerIcon(obj, new Vector2(x, y), item.Key.Icon, item.Value);
+            setPlayerIcon(obj, new Vector2(x, y), item.Key.Icon, item.Value);
 
             // 次の位置
             x += w;
@@ -393,6 +394,6 @@ public class GameSceneDirector : MonoBehaviour
         // パネル表示
         panelGameOver.DispPanel(Player.WeaponSpawners);
         // ゲーム中断
-        SetEnabled(false);
+        setEnabled(false);
     }
 }

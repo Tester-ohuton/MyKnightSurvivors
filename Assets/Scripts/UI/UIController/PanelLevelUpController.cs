@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class PanelLevelUpController : MonoBehaviour
 {
-    [SerializeField] List<Button> buttonLevelUps;
+    [SerializeField] List<Button> ButtonLevelUps;
     [SerializeField] Button buttonCancel;
 
     GameSceneDirector sceneDirector;
     // 選択カーソル
     int selectButtonCursor;
     // 表示中のボタン
-    public List<Button> dispButtons;
+    List<Button> dispButtons;
 
     // 初期化
     public void Init(GameSceneDirector sceneDirector)
@@ -23,26 +23,27 @@ public class PanelLevelUpController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void SetButtonLevelUp(Button button,int lv,string name,string desc,Sprite icon)
+    // レベルアップ時のボタンの設定
+    void setButtonLvUp(Button button, int lv, string name, string desc, Sprite icon)
     {
         Image image = button.transform.Find("ImageItem").GetComponent<Image>();
-        Text itemName =button.transform.Find("TextName").GetComponent<Text>();
+        Text itemName = button.transform.Find("TextItemName").GetComponent<Text>();
         Text level = button.transform.Find("TextLevel").GetComponent<Text>();
         Text help = button.transform.Find("TextHelp").GetComponent<Text>();
-    
+
         image.sprite = icon;
         itemName.text = name;
         help.text = desc;
         // レベルの表示を少し変える
-        level.text = "LV："+lv;
+        level.text = "LV : " + lv;
         level.color = Color.white;
         // 初期装備
         if (1 == lv)
         {
-            level.text = "NEW !!";
+            level.text = "NEW!!";
             level.color = Color.yellow;
         }
 
@@ -64,11 +65,11 @@ public class PanelLevelUpController : MonoBehaviour
 
         // 表示中のボタン
         dispButtons = new List<Button>();
-        
-        for(int i = 0;i < buttonLevelUps.Count;i++)
+
+        for (int i = 0; i < ButtonLevelUps.Count; i++)
         {
             // 今回生成するボタン
-            Button button = buttonLevelUps[i];
+            Button button = ButtonLevelUps[i];
             // ボタン初期化
             button.gameObject.SetActive(false);
             button.onClick.RemoveAllListeners();
@@ -90,9 +91,9 @@ public class PanelLevelUpController : MonoBehaviour
             int lv = item.Lv;
             string name = item.Name;
             string desc = item.Description;
-            Sprite icon =item.Icon;
+            Sprite icon = item.Icon;
             // ボタン作成
-            SetButtonLevelUp(button,lv,name,desc,icon);
+            setButtonLvUp(button, lv, name, desc, icon);
             dispButtons.Add(button);
         }
 
@@ -100,12 +101,13 @@ public class PanelLevelUpController : MonoBehaviour
         selectButtonCursor = 0;
 
         // 選べるボタンなし
-        if(items.Count < 1)
+        if (1 > items.Count)
         {
             buttonCancel.gameObject.SetActive(true);
-            // 選択状態にする
+            // デフォルトで選択状態にする
             buttonCancel.Select();
         }
+        // 1つ目の項目を選択状態にする
         else
         {
             dispButtons[0].Select();
@@ -121,6 +123,6 @@ public class PanelLevelUpController : MonoBehaviour
     // レベルアップパネルで必要なアイテム数
     public int GetButtonCount()
     {
-        return buttonLevelUps.Count;
+        return ButtonLevelUps.Count;
     }
 }
