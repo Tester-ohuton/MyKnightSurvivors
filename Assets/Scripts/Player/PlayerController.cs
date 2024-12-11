@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,7 +38,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -54,12 +55,12 @@ public class PlayerController : MonoBehaviour
 
     // 初期化
     public void Init(GameSceneDirector sceneDirector, EnemySpawnerController enemySpawner,
-        CharacterStats characterStats,Text textLv,Slider sliderHP,Slider sliderXP)
+        CharacterStats characterStats, Text textLv, Slider sliderHP, Slider sliderXP)
     {
         // 変数初期化
         levelRequirements = new List<int>();
         WeaponSpawners = new List<BaseWeaponSpawner>();
-        ItemDatas = new Dictionary<ItemData,int>();
+        ItemDatas = new Dictionary<ItemData, int>();
 
         this.sceneDirector = sceneDirector;
         this.enemySpawner = enemySpawner;
@@ -74,31 +75,31 @@ public class PlayerController : MonoBehaviour
         // プレイヤーの向き
         Forward = Vector2.right;
 
-        // 経験値の闘値リスト作成
+        // 経験値の閾値リスト作成
         levelRequirements.Add(0);
         for (int i = 1; i < 1000; i++)
         {
-            // 1つ前の闘値
-            int prexp = levelRequirements[i - 1];
+            // 1つ前の閾値
+            int prevxp = levelRequirements[i - 1];
             // 41以降はレベル毎に16XPずつ増加
             int addxp = 16;
 
             // レベル2までレベルアップするのに5XP
-            if(i == 1)
+            if (i == 1)
             {
                 addxp = 5;
             }
-            else if(i <= 20)
+            else if (20 >= i)
             {
                 addxp = 10;
             }
-            else if(i <= 40)
+            else if (40 >= i)
             {
                 addxp = 13;
             }
 
             // 必要経験値
-            levelRequirements.Add(prexp + addxp);
+            levelRequirements.Add(prevxp + addxp);
         }
 
         // LV2の必要経験値
@@ -112,10 +113,11 @@ public class PlayerController : MonoBehaviour
         moveSliderHP();
 
         // 武器データセット
-        foreach(var item in Stats.DefaultWeaponIds)
+        foreach (var item in Stats.DefaultWeaponIds)
         {
             addWeaponSpawner(item);
         }
+
     }
 
     // プレイヤーの移動に関する処理
@@ -126,25 +128,25 @@ public class PlayerController : MonoBehaviour
         // 再生するアニメーション
         string trigger = "";
 
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
             dir += Vector2.up;
             trigger = "isUp";
         }
 
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             dir -= Vector2.up;
             trigger = "isDown";
         }
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             dir += Vector2.right;
             trigger = "isRight";
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             dir -= Vector2.right;
             trigger = "isLeft";
@@ -186,6 +188,8 @@ public class PlayerController : MonoBehaviour
             pos.y = sceneDirector.WorldEnd.y;
             rigidbody2d.position = pos;
         }
+
+        Forward = dir;
     }
 
     // カメラ移動
@@ -222,15 +226,15 @@ public class PlayerController : MonoBehaviour
     {
         // ワールド座標をスクリーン座標に変換
         Vector3 pos = RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position);
-        pos.y -= 75;
+        pos.y -= 50;
         sliderHP.transform.position = pos;
     }
 
     // ダメージ
     public void Damage(float attack)
     {
-        // 非アクティブならぬける
-        if(!enabled) return;
+        // 非アクティブなら抜ける
+        if (!enabled) return;
 
         float damage = Mathf.Max(0, attack - Stats.Defense);
         Stats.HP -= damage;
@@ -238,27 +242,35 @@ public class PlayerController : MonoBehaviour
         // ダメージ表示
         sceneDirector.DispDamage(gameObject, damage);
 
-        // TODO ゲームオーバー
-        if(Stats.HP < 0)
+        // ゲームオーバー
+        if (0 > Stats.HP)
         {
+            // 操作できないようにする
+            SetEnabled(false);
 
+            // アニメーション
+            transform.DOScale(new Vector2(5, 0), 2).SetUpdate(true)
+                .OnComplete(() =>
+                {
+                    sceneDirector.DispPanelGameOver();
+                });
         }
 
-        if (Stats.HP < 0) Stats.HP = 0;
+        if (0 > Stats.HP) Stats.HP = 0;
         setSliderHP();
     }
 
     // HPスライダーの値を更新
-    private void setSliderHP()
+    void setSliderHP()
     {
-        sliderHP.maxValue = Stats.HP;
+        sliderHP.maxValue = Stats.MaxHP;
         sliderHP.value = Stats.HP;
     }
 
     // XPスライダーの値を更新
-    private void setSliderXP()
+    void setSliderXP()
     {
-        sliderXP.maxValue = Stats.XP;
+        sliderXP.maxValue = Stats.MaxXP;
         sliderXP.value = Stats.XP;
     }
 
@@ -287,7 +299,7 @@ public class PlayerController : MonoBehaviour
         if (!collision.gameObject.TryGetComponent<EnemyController>(out var enemy)) return;
         // タイマー未消化
         if (0 < attackCoolDownTimer) return;
-        
+
         enemy.Damage(Stats.Attack);
         attackCoolDownTimer = attackCoolDownTimerMax;
     }
@@ -304,7 +316,7 @@ public class PlayerController : MonoBehaviour
     // レベルテキスト更新
     void setTextLv()
     {
-        textLv.text = "Lv " + Stats.Lv;
+        textLv.text = "LV " + Stats.Lv;
     }
 
     // 武器を追加
@@ -320,11 +332,11 @@ public class PlayerController : MonoBehaviour
         }
 
         // 新規追加
-        spawner = WeaponSpawnerSettings.Instance.CreateWeaponSpawner(id,enemySpawner,transform);
+        spawner = WeaponSpawnerSettings.Instance.CreateWeaponSpawner(id, enemySpawner, transform);
 
-        if(spawner == null)
+        if (null == spawner)
         {
-            Debug.Log("武器データがありません");
+            Debug.LogError("武器データがありません");
             return;
         }
 
@@ -346,13 +358,15 @@ public class PlayerController : MonoBehaviour
             Stats.Lv++;
 
             // 次の経験値
-            if(Stats.Lv < levelRequirements.Count)
+            if (Stats.Lv < levelRequirements.Count)
             {
                 Stats.XP = 0;
                 Stats.MaxXP = levelRequirements[Stats.Lv];
             }
 
             // レベルアップパネル表示
+            sceneDirector.DispPanelLevelUp();
+
             setTextLv();
         }
 
@@ -365,11 +379,11 @@ public class PlayerController : MonoBehaviour
     {
         List<int> ret = new List<int>(Stats.UsableWeaponIds);
 
-        // 装備可能数を超える場合は装備日している武器のIDを返す
-        if(Stats.UsableWeaponMax - 1 < WeaponSpawners.Count)
+        // 装備可能数を超える場合は装備している武器のIDを返す
+        if (Stats.UsableWeaponMax - 1 < WeaponSpawners.Count)
         {
             ret.Clear();
-            foreach(var item in WeaponSpawners)
+            foreach (var item in WeaponSpawners)
             {
                 ret.Add(item.Stats.Id);
             }
@@ -384,14 +398,14 @@ public class PlayerController : MonoBehaviour
         // 装備可能な武器ID
         List<int> usableIds = GetUsableWeaponIds();
 
-        // 装備可能な武器がない
-        if(usableIds.Count < 1)
+        // 装備可能な武器がない(一応)
+        if (1 > usableIds.Count)
         {
             return null;
         }
 
         // 抽選
-        int rnd = Random.Range(0,usableIds.Count);
+        int rnd = Random.Range(0, usableIds.Count);
         int id = usableIds[rnd];
 
         // 装備済みなら次のレベルのデータ
@@ -401,8 +415,8 @@ public class PlayerController : MonoBehaviour
             return spawner.GetLevelUpStats(true);
         }
 
-        // 新規ならばレベル1のデータ
-        return WeaponSpawnerSettings.Instance.Get(id,1);
+        // 新規ならレベル1のデータ
+        return WeaponSpawnerSettings.Instance.Get(id, 1);
     }
 
     // アイテムを追加
@@ -410,7 +424,7 @@ public class PlayerController : MonoBehaviour
     {
         ItemData itemData = ItemSettings.Instance.Get(id);
 
-        if (itemData == null)
+        if (null == itemData)
         {
             Debug.LogError("アイテムデータが見つかりませんでした");
             return;
@@ -419,20 +433,20 @@ public class PlayerController : MonoBehaviour
         // データ追加
         Stats.AddItemData(itemData);
 
-        // 取得済みリストへ
+        // 取得済みリストへ追加
         ItemData key = null;
-        foreach(var item in ItemDatas)
+        foreach (var item in ItemDatas)
         {
-            if(item.Key.Id==itemData.Id)
+            if (item.Key.Id == itemData.Id)
             {
-                key =item.Key;
+                key = item.Key;
                 break;
             }
         }
 
-        if(key==null)
+        if (null == key)
         {
-            ItemDatas.Add(itemData,0);
+            ItemDatas.Add(itemData, 0);
             key = itemData;
         }
 
@@ -442,16 +456,16 @@ public class PlayerController : MonoBehaviour
     // レベルアップやアイテム取得時
     public void AddBonusData(BonusData bonusData)
     {
-        if (bonusData == null) return;
+        if (null == bonusData) return;
 
         // 武器データ
-        if(bonusData.WeaponSpawnerStats != null)
+        if (null != bonusData.WeaponSpawnerStats)
         {
             addWeaponSpawner(bonusData.WeaponSpawnerStats.Id);
         }
 
         // アイテムデータ
-        if(bonusData.ItemData != null)
+        if (null != bonusData.ItemData)
         {
             addItemData(bonusData.ItemData.Id);
         }
@@ -466,7 +480,7 @@ public class PlayerController : MonoBehaviour
         this.enabled = enabled;
 
         // 武器
-        foreach(var item in WeaponSpawners)
+        foreach (var item in WeaponSpawners)
         {
             item.SetEnabled(enabled);
         }

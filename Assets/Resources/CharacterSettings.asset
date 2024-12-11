@@ -28,9 +28,28 @@ MonoBehaviour:
     PickUpRange: 0.5
     AliveTime: 0
     Prefab: {fileID: 2089776629263188795, guid: 4d22a964bfa50064bbdf8aea5a4dd01a, type: 3}
-    DefaultWeaponIds: 0000000001000000
+    DefaultWeaponIds: 0000000001000000020000000300000004000000
     UsableWeaponIds: 000000000100000002000000030000000400000005000000060000000700000008000000
     UsableWeaponMax: 6
+    MoveType: 0
+  - Title: "\u30A2\u30FC\u30C1\u30E3\u30FC"
+    Id: 1
+    Lv: 1
+    Name: "\u30A2\u30FC\u30C1\u30E3\u30FC"
+    Description: 
+    Attack: 3
+    Defense: 0.2
+    HP: 100
+    MaxHP: 100
+    XP: 0
+    MaxXP: 10
+    MoveSpeed: 3
+    PickUpRange: 0.5
+    AliveTime: 0
+    Prefab: {fileID: 7423254257681843145, guid: 978f13a79ac7b9c4a90c8de6cd4ce9d7, type: 3}
+    DefaultWeaponIds: 0000000001000000020000000300000004000000
+    UsableWeaponIds: 0100000002000000030000000400000005000000060000000700000008000000
+    UsableWeaponMax: 5
     MoveType: 0
   - Title: "\u30B3\u30A6\u30E2\u30EA"
     Id: 100
@@ -45,7 +64,7 @@ MonoBehaviour:
     MaxXP: 0.5
     MoveSpeed: 0.5
     PickUpRange: 0
-    AliveTime: 0
+    AliveTime: 99
     Prefab: {fileID: 81922335149861320, guid: cd33f00c5027f794e989957d05a50e33, type: 3}
     DefaultWeaponIds: 
     UsableWeaponIds: 
@@ -64,7 +83,7 @@ MonoBehaviour:
     MaxXP: 1
     MoveSpeed: 0.15
     PickUpRange: 0
-    AliveTime: 0
+    AliveTime: 99
     Prefab: {fileID: 5951997982310866065, guid: b51537b8262cf814ab28a20468a71b66, type: 3}
     DefaultWeaponIds: 
     UsableWeaponIds: 
@@ -83,7 +102,7 @@ MonoBehaviour:
     MaxXP: 2
     MoveSpeed: 0.2
     PickUpRange: 0
-    AliveTime: 0
+    AliveTime: 199
     Prefab: {fileID: 301107930987037553, guid: 6bb576e8e0cc5db46a2ece6cfe44d555, type: 3}
     DefaultWeaponIds: 
     UsableWeaponIds: 
@@ -102,7 +121,7 @@ MonoBehaviour:
     MaxXP: 2
     MoveSpeed: 0.5
     PickUpRange: 0
-    AliveTime: 0
+    AliveTime: 199
     Prefab: {fileID: 2625538905218669102, guid: 2c7482b6f2a1b024e82404a1a767fc87, type: 3}
     DefaultWeaponIds: 
     UsableWeaponIds: 
@@ -121,7 +140,7 @@ MonoBehaviour:
     MaxXP: 3
     MoveSpeed: 0.3
     PickUpRange: 0
-    AliveTime: 0
+    AliveTime: 199
     Prefab: {fileID: 3764205768759466038, guid: c2cea7aa51efbec4b86f9a1d14a976f8, type: 3}
     DefaultWeaponIds: 
     UsableWeaponIds: 
@@ -140,7 +159,7 @@ MonoBehaviour:
     MaxXP: 6
     MoveSpeed: 0.35
     PickUpRange: 0
-    AliveTime: 0
+    AliveTime: 199
     Prefab: {fileID: 2564337141301423698, guid: b75482db0a67eac4887242e165b28c78, type: 3}
     DefaultWeaponIds: 
     UsableWeaponIds: 
@@ -148,7 +167,7 @@ MonoBehaviour:
     MoveType: 0
   - Title: "\u5927\u7FA4\u30B3\u30A6\u30E2\u30EA"
     Id: 200
-    Lv: 0
+    Lv: 1
     Name: "\u5927\u7FA4\u30B3\u30A6\u30E2\u30EA"
     Description: 
     Attack: 15
@@ -167,7 +186,7 @@ MonoBehaviour:
     MoveType: 1
   - Title: "\u5927\u7FA4\u30B9\u30E9\u30A4\u30E0"
     Id: 201
-    Lv: 0
+    Lv: 1
     Name: "\u5927\u7FA4\u30B9\u30E9\u30A4\u30E0"
     Description: 
     Attack: 50
@@ -178,7 +197,7 @@ MonoBehaviour:
     MaxXP: 10
     MoveSpeed: 0.1
     PickUpRange: 0
-    AliveTime: 90
+    AliveTime: 30
     Prefab: {fileID: 5951997982310866065, guid: b51537b8262cf814ab28a20468a71b66, type: 3}
     DefaultWeaponIds: 
     UsableWeaponIds: 
@@ -197,7 +216,7 @@ MonoBehaviour:
     MaxXP: 30
     MoveSpeed: 0.15
     PickUpRange: 0
-    AliveTime: -1
+    AliveTime: 0
     Prefab: {fileID: 5767778556957237177, guid: ebbcc917d1fc2dc428c8f0fe2dd2da48, type: 3}
     DefaultWeaponIds: 
     UsableWeaponIds: 

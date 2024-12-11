@@ -113,7 +113,7 @@ public class BaseWeaponSpawner : MonoBehaviour
     public void LevelUp()
     {
         // 現在のレベル
-        int lv =Stats.Lv;
+        int lv = Stats.Lv;
 
         // 次のレベルのデータ
         WeaponSpawnerStats nextData = GetLevelUpStats();
