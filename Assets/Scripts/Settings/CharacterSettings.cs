@@ -32,7 +32,7 @@ public class CharacterSettings : ScriptableObject
     }
 
     // 敵生成
-    public EnemyController CreateEnemy(int id,GameSceneDirector sceneDirector,Vector3 position)
+    public EnemyController CreateEnemy1(int id,GameSceneDirector sceneDirector,Vector3 position)
     {
         // ステータス取得
         CharacterStats stats = Instance.Get(id);
@@ -47,7 +47,7 @@ public class CharacterSettings : ScriptableObject
     }
 
     // プレイヤー生成
-    public PlayerController CreatePlayer(int id,GameSceneDirector sceneDirector,
+    public PlayerController CreatePlayer1(int id,GameSceneDirector sceneDirector,
         EnemySpawnerController enemySpawner, Text textLv,Slider sliderHP,Slider sliderXP)
     {
         // ステータスの取得
@@ -57,9 +57,15 @@ public class CharacterSettings : ScriptableObject
 
         // データセット
         PlayerController ctrl = obj.GetComponent<PlayerController>();   
-        ctrl.Init(sceneDirector,enemySpawner,stats,textLv,sliderHP,sliderXP);
+        ctrl.GameInit(sceneDirector,enemySpawner,stats,textLv,sliderHP,sliderXP);
 
         return ctrl;
+    }
+
+    // 背景をセット
+    public Sprite GetBackground(int id)
+    {
+        return datas.Find(item => item.Id == id).Background[id];
     }
 }
 
@@ -85,6 +91,8 @@ public class CharacterStats : BaseStats
     public int UsableWeaponMax;
     // 移動タイプ
     public MoveType MoveType;
+
+    public List<Sprite> Background;
 
     // アイテム追加
     public void AddItemData(ItemData itemData)

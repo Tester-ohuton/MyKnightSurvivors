@@ -76,9 +76,7 @@ public class SESoundData
 {
     public enum SE
     {
-        Attack,
-        Jump,
-        ItemPickup,
+        LevelUp,
         Button,
     }
 

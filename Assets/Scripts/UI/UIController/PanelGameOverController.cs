@@ -25,7 +25,7 @@ public class PanelGameOverController : MonoBehaviour
     List<Text> resultTexts;
 
     GameSceneDirector sceneDirector;
-
+    
     // èâä˙âª
     public void Init(GameSceneDirector sceneDirector)
     {
@@ -111,7 +111,7 @@ public class PanelGameOverController : MonoBehaviour
 
         // BG
         Utils.SetAlpha(panelGameOverBG, 0);
-        seq.Append(panelGameOverBG.DOFade(1, dispTime));
+        seq.Append(panelGameOverBG.DOFade(0.5f, dispTime));
 
         // Ç±ÇÃÉpÉlÉã
         Image panelGameOver = gameObject.GetComponent<Image>();
