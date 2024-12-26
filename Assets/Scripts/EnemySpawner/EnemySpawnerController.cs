@@ -41,6 +41,7 @@ public class EnemySpawnerController : MonoBehaviour
 
     // シーンディレクター
     GameSceneDirector sceneDirector;
+
     // 当たり判定のあるタイルマップ
     Tilemap tilemapCollider;
     // 現在の参照データ
@@ -138,7 +139,7 @@ public class EnemySpawnerController : MonoBehaviour
         int id = enemySpawnData.EnemyIDs[rnd];
 
         // 敵生成
-        EnemyController enemy = CharacterSettings.Instance.CreateEnemy(id,sceneDirector,pos);
+        EnemyController enemy = CharacterSettings.Instance.CreateEnemy1(id,sceneDirector,pos);
         enemies.Add(enemy);
     }
 

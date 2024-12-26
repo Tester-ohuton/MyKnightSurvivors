@@ -28,10 +28,13 @@ MonoBehaviour:
     PickUpRange: 0.5
     AliveTime: 0
     Prefab: {fileID: 2089776629263188795, guid: 4d22a964bfa50064bbdf8aea5a4dd01a, type: 3}
-    DefaultWeaponIds: 0000000001000000020000000300000004000000
-    UsableWeaponIds: 000000000100000002000000030000000400000005000000060000000700000008000000
+    DefaultWeaponIds: 00000000010000000200000003000000
+    UsableWeaponIds: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
     UsableWeaponMax: 6
     MoveType: 0
+    Background:
+    - {fileID: 21300000, guid: 208a4d8e95922ad418e566b6a5567bc5, type: 3}
+    - {fileID: 21300000, guid: 8cd80059c0069c44ca462d88a8f7e555, type: 3}
   - Title: "\u30A2\u30FC\u30C1\u30E3\u30FC"
     Id: 1
     Lv: 1
@@ -47,10 +50,13 @@ MonoBehaviour:
     PickUpRange: 0.5
     AliveTime: 0
     Prefab: {fileID: 7423254257681843145, guid: 978f13a79ac7b9c4a90c8de6cd4ce9d7, type: 3}
-    DefaultWeaponIds: 0000000001000000020000000300000004000000
-    UsableWeaponIds: 0100000002000000030000000400000005000000060000000700000008000000
+    DefaultWeaponIds: 01000000020000000300000004000000
+    UsableWeaponIds: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
     UsableWeaponMax: 5
     MoveType: 0
+    Background:
+    - {fileID: 21300000, guid: 208a4d8e95922ad418e566b6a5567bc5, type: 3}
+    - {fileID: 21300000, guid: 8cd80059c0069c44ca462d88a8f7e555, type: 3}
   - Title: "\u30B3\u30A6\u30E2\u30EA"
     Id: 100
     Lv: 0
@@ -70,6 +76,7 @@ MonoBehaviour:
     UsableWeaponIds: 
     UsableWeaponMax: 0
     MoveType: 0
+    Background: []
   - Title: "\u30B9\u30E9\u30A4\u30E0"
     Id: 101
     Lv: 0
@@ -89,6 +96,7 @@ MonoBehaviour:
     UsableWeaponIds: 
     UsableWeaponMax: 0
     MoveType: 0
+    Background: []
   - Title: "\u30B4\u30D6\u30EA\u30F3"
     Id: 102
     Lv: 0
@@ -98,7 +106,7 @@ MonoBehaviour:
     Defense: 0
     HP: 25
     MaxHP: 0
-    XP: 1
+    XP: 6
     MaxXP: 2
     MoveSpeed: 0.2
     PickUpRange: 0
@@ -108,6 +116,7 @@ MonoBehaviour:
     UsableWeaponIds: 
     UsableWeaponMax: 0
     MoveType: 0
+    Background: []
   - Title: "\u30BE\u30F3\u30D3"
     Id: 103
     Lv: 0
@@ -117,7 +126,7 @@ MonoBehaviour:
     Defense: 0
     HP: 30
     MaxHP: 0
-    XP: 1.5
+    XP: 7
     MaxXP: 2
     MoveSpeed: 0.5
     PickUpRange: 0
@@ -127,6 +136,7 @@ MonoBehaviour:
     UsableWeaponIds: 
     UsableWeaponMax: 0
     MoveType: 0
+    Background: []
   - Title: "\u30B9\u30B1\u30EB\u30C8\u30F3"
     Id: 104
     Lv: 0
@@ -136,7 +146,7 @@ MonoBehaviour:
     Defense: 0
     HP: 40
     MaxHP: 0
-    XP: 2
+    XP: 8
     MaxXP: 3
     MoveSpeed: 0.3
     PickUpRange: 0
@@ -146,6 +156,7 @@ MonoBehaviour:
     UsableWeaponIds: 
     UsableWeaponMax: 0
     MoveType: 0
+    Background: []
   - Title: "\u30F4\u30A1\u30F3\u30D1\u30A4\u30A2"
     Id: 105
     Lv: 0
@@ -155,7 +166,7 @@ MonoBehaviour:
     Defense: 0
     HP: 50
     MaxHP: 0
-    XP: 3
+    XP: 11
     MaxXP: 6
     MoveSpeed: 0.35
     PickUpRange: 0
@@ -165,6 +176,7 @@ MonoBehaviour:
     UsableWeaponIds: 
     UsableWeaponMax: 0
     MoveType: 0
+    Background: []
   - Title: "\u5927\u7FA4\u30B3\u30A6\u30E2\u30EA"
     Id: 200
     Lv: 1
@@ -174,7 +186,7 @@ MonoBehaviour:
     Defense: 0
     HP: 3
     MaxHP: 0
-    XP: 0.1
+    XP: 1.5
     MaxXP: 0.5
     MoveSpeed: 4
     PickUpRange: 0
@@ -184,6 +196,7 @@ MonoBehaviour:
     UsableWeaponIds: 
     UsableWeaponMax: 0
     MoveType: 1
+    Background: []
   - Title: "\u5927\u7FA4\u30B9\u30E9\u30A4\u30E0"
     Id: 201
     Lv: 1
@@ -193,7 +206,7 @@ MonoBehaviour:
     Defense: 0
     HP: 500
     MaxHP: 0
-    XP: 5
+    XP: 1.5
     MaxXP: 10
     MoveSpeed: 0.1
     PickUpRange: 0
@@ -203,6 +216,7 @@ MonoBehaviour:
     UsableWeaponIds: 
     UsableWeaponMax: 0
     MoveType: 0
+    Background: []
   - Title: "\u30DC\u30B9"
     Id: 500
     Lv: 1
@@ -222,3 +236,4 @@ MonoBehaviour:
     UsableWeaponIds: 
     UsableWeaponMax: 0
     MoveType: 0
+    Background: []

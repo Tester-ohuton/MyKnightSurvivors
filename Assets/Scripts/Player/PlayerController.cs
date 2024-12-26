@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // 初期化
-    public void Init(GameSceneDirector sceneDirector, EnemySpawnerController enemySpawner,
+    public void GameInit(GameSceneDirector sceneDirector, EnemySpawnerController enemySpawner,
         CharacterStats characterStats, Text textLv, Slider sliderHP, Slider sliderXP)
     {
         // 変数初期化
@@ -224,10 +224,10 @@ public class PlayerController : MonoBehaviour
     // HPスライダー移動
     void moveSliderHP()
     {
-        // ワールド座標をスクリーン座標に変換
-        Vector3 pos = RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position);
-        pos.y -= 50;
-        sliderHP.transform.position = pos;
+        // sliderHPの位置を更新
+        Vector3 pos = transform.position;
+        pos.y += 1f;
+        sliderHP.transform.position = Camera.main.WorldToScreenPoint(pos);
     }
 
     // ダメージ

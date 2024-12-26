@@ -1,14 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
+using unityroom.Api;
 
 public class GameSceneDirector : MonoBehaviour
 {
+    [SerializeField] int playerScore;
     // タイルマップ
     [SerializeField] GameObject grid;
     [SerializeField] Tilemap tilemapCollider;
@@ -36,15 +41,19 @@ public class GameSceneDirector : MonoBehaviour
     [SerializeField] Slider sliderHP;
     [SerializeField] Text textLv;
 
+    // 背景変更
+    [SerializeField] Image imageBackground;
+
     // 経験値
     [SerializeField] List<GameObject> prefabXP;
 
     // レベルアップパネル
     [SerializeField] PanelLevelUpController panelLevelUp;
+    public ParticleSystem[] particle;
 
     // 宝箱関連
     [SerializeField] PanelTreasureChestController panelTreasureChest;
-    [SerializeField] GameObject prefabTreasureChest;
+    [SerializeField] GameObject[] prefabTreasureChest;
     [SerializeField] List<int> treasureChestItemIds;
     [SerializeField] float treasureChestTimerMin;
     [SerializeField] float treasureChestTimerMax;
@@ -68,6 +77,11 @@ public class GameSceneDirector : MonoBehaviour
     // 終了時間
     [SerializeField] float GameOverTime;
 
+    const string statisticsName = "HighScore";
+
+    // SE
+    [SerializeField] SoundPlayer soundPlayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,9 +89,14 @@ public class GameSceneDirector : MonoBehaviour
         playerWeaponIcons = new Dictionary<BaseWeaponSpawner, GameObject>();
         playerItemIcons = new Dictionary<ItemData, GameObject>();
 
+        // 背景変更
+        int sceneId = TitleSceneDirector.SceneId;
+        Sprite background = CharacterSettings.Instance.GetBackground(sceneId);
+        imageBackground.sprite = background;
+
         // プレイヤー作成
         int playerId = TitleSceneDirector.CharacterId;
-        Player = CharacterSettings.Instance.CreatePlayer(playerId, this, enemySpawner,
+        Player = CharacterSettings.Instance.CreatePlayer1(playerId, this, enemySpawner,
             textLv, sliderHP, sliderXP);
 
         // 初期設定
@@ -130,8 +149,6 @@ public class GameSceneDirector : MonoBehaviour
 
         // TimeScaleリセット
         setEnabled();
-
-        //SoundController.Instance.PlayBGM(0);
     }
 
     // Update is called once per frame
@@ -199,7 +216,7 @@ public class GameSceneDirector : MonoBehaviour
     // ゲーム再開/停止
     void setEnabled(bool enabled = true)
     {
-        this.enabled = enabled;
+        //this.enabled = enabled;
         Time.timeScale = (enabled) ? 1 : 0;
         Player.SetEnabled(enabled);
     }
@@ -211,6 +228,7 @@ public class GameSceneDirector : MonoBehaviour
         Player.AddBonusData(bonusData);
         // ステータス反映
         dispPlayerIcon();
+
         // ゲーム再開
         setEnabled();
     }
@@ -255,6 +273,10 @@ public class GameSceneDirector : MonoBehaviour
             }
         }
 
+        // 独立した時間の計算
+        var main = particle[0].main;
+        main.useUnscaledTime = true; // Unscaled時間で動かす
+
         // レベルアップパネル表示
         panelLevelUp.DispPanel(items);
         // ゲーム停止
@@ -268,6 +290,10 @@ public class GameSceneDirector : MonoBehaviour
         ItemData item = getRandomItemData();
         // データ無し
         if (null == item) return;
+
+        // 独立した時間の計算
+        var main = particle[1].main;
+        main.useUnscaledTime = true; // Unscaled時間で動かす
 
         // パネル表示
         panelTreasureChest.DispPanel(item);
@@ -301,8 +327,10 @@ public class GameSceneDirector : MonoBehaviour
         if (Utils.IsColliderTile(tilemapCollider, new Vector2(x, y))) return;
 
         // 生成
-        GameObject obj = Instantiate(prefabTreasureChest, new Vector3(x, y, 0), Quaternion.identity);
-        obj.GetComponent<TreasureChestController>().Init(this);
+        int random = Random.Range(0, prefabTreasureChest.Length);
+        GameObject obj = Instantiate(prefabTreasureChest[random], new Vector3(x, y, 0), Quaternion.identity);
+        if (!obj.TryGetComponent<TreasureChestController>(out var chest)) return;
+        chest.Init(this);
 
         // 次のタイマーセット
         treasureChestTimer = Random.Range(treasureChestTimerMin, treasureChestTimerMax);
@@ -379,6 +407,7 @@ public class GameSceneDirector : MonoBehaviour
     {
         DefeatedEnemyCount++;
         textDefeatedEnemy.text = "" + DefeatedEnemyCount;
+        playerScore += DefeatedEnemyCount;
     }
 
     // タイトルへ
@@ -395,5 +424,13 @@ public class GameSceneDirector : MonoBehaviour
         panelGameOver.DispPanel(Player.WeaponSpawners);
         // ゲーム中断
         setEnabled(false);
+    }
+
+    public void RankingSend()
+    {
+        // C#スクリプトの冒頭に `using unityroom.Api;` を追加してください。
+
+        // ボードNo1にスコア123.45fを送信する。
+        UnityroomApiClient.Instance.SendScore(1, (float)playerScore, ScoreboardWriteMode.HighScoreAsc);
     }
 }

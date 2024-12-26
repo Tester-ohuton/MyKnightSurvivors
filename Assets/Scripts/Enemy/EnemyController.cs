@@ -10,6 +10,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField] GameSceneDirector sceneDirector;
     Rigidbody2D rigidbody2d;
 
+    // SE
+    [SerializeField] SoundPlayer soundPlayer;
+
     // 攻撃のクールダウン
     float attackCoolDownTimer;
     float attackCoolDownTimerMax = 0.5f;
@@ -163,6 +166,7 @@ public class EnemyController : MonoBehaviour
         if(State.Alive != state) return;
 
         player.Damage(Stats.Attack);
+
         attackCoolDownTimer = attackCoolDownTimerMax;
     }
 
@@ -182,7 +186,7 @@ public class EnemyController : MonoBehaviour
         sceneDirector.DispDamage(gameObject, damage);
 
         // 消滅
-        if(Stats.HP < 0)
+        if (Stats.HP < 0)
         {
             sceneDirector.AddDefeatedEnemy();
             setDead();
